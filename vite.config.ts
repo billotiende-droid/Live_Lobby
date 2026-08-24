@@ -1,14 +1,16 @@
 import { defineConfig, type HtmlTagDescriptor, type Plugin } from 'vite'
 import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
+import fs from 'node:fs'
 import path from 'node:path'
-
-// ✅ Vite 8 compliant JSON import attribute
-import siteConfig from "./.figma/make/site.json" with { type: 'json' };
 
 // Vite config — https://vitejs.dev/config/
 export default defineConfig(({ mode }) => {
   const emitSourcemaps = mode === 'development'
+  const figmaSiteConfigPath = path.resolve(import.meta.dirname, '.figma/make/site.json')
+  const siteConfig = fs.existsSync(figmaSiteConfigPath)
+    ? (JSON.parse(fs.readFileSync(figmaSiteConfigPath, 'utf8')) as FigmaSiteConfiguration)
+    : undefined
 
   return {
     base: process.env.FIGMA_PUBLIC_URL ? `${process.env.FIGMA_PUBLIC_URL}/` : '/',
@@ -19,11 +21,14 @@ export default defineConfig(({ mode }) => {
     plugins: [
       react(),
       tailwindcss(),
-      // ✅ Corrected variable name from siteConfiguration -> siteConfig
-      figmaSiteConfiguration(siteConfig),
-      figmaErrorOverlayReplay(),
-      figmaReactRefreshBoundaryFallback(),
-      figmaMakeKitPlugin({ storiesGlob: '/src/**/*.stories.{ts,tsx,js,jsx}' }),
+      ...(siteConfig
+        ? [
+            figmaSiteConfiguration(siteConfig),
+            figmaErrorOverlayReplay(),
+            figmaReactRefreshBoundaryFallback(),
+            figmaMakeKitPlugin({ storiesGlob: '/src/**/*.stories.{ts,tsx,js,jsx}' }),
+          ]
+        : []),
     ],
     resolve: {
       alias: {
