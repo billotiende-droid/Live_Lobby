@@ -1,4 +1,4 @@
-'use client';
+
 
 import { useCallback } from 'react';
 import { motion } from 'framer-motion';
@@ -27,7 +27,7 @@ function HeaderNav() {
     <header
       style={{
         backgroundColor: '#FFDB00',
-        height: 64,
+        height: 74,
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
@@ -35,6 +35,7 @@ function HeaderNav() {
         flexShrink: 0,
         paddingLeft: 20,
         paddingRight: 20,
+        boxSizing: 'border-box',
       }}
     >
       <span
@@ -176,9 +177,12 @@ function LobbyControls({ handleTuneIn }: LobbyControlsProps) {
         flexDirection: 'column',
         alignItems: 'center',
         gap: 8,
-        paddingBottom: 32,
+        // Keeps the CTA comfortably clear of the contained brand accent while
+        // lifting the full control stack closer to the emitter.
+        paddingBottom: 42,
         paddingLeft: 20,
         paddingRight: 20,
+        boxSizing: 'border-box',
       }}
     >
       <h1
@@ -226,6 +230,7 @@ function LobbyControls({ handleTuneIn }: LobbyControlsProps) {
           letterSpacing: '0.02em',
           border: 'none',
           cursor: 'pointer',
+          boxSizing: 'border-box',
         }}
         transition={{ type: 'spring', stiffness: 420, damping: 28 }}
       >
@@ -248,6 +253,7 @@ export default function App() {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
+        boxSizing: 'border-box',
       }}
     >
       {/* Mobile canvas — max 430px */}
@@ -255,10 +261,13 @@ export default function App() {
         style={{
           width: '100%',
           maxWidth: 430,
-          minHeight: '100dvh',
+          height: '100dvh',
           backgroundColor: '#0A0A0A',
           display: 'flex',
           flexDirection: 'column',
+          position: 'relative',
+          overflow: 'hidden',
+          boxSizing: 'border-box',
         }}
       >
         <HeaderNav />
@@ -266,7 +275,7 @@ export default function App() {
         {/* Upper zone — emitter */}
         <div
           style={{
-            flex: '0 0 58%',
+            flex: '0 0 56%',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
@@ -292,6 +301,19 @@ export default function App() {
             <LobbyControls handleTuneIn={handleTuneIn} />
           </motion.div>
         </div>
+
+        <div
+          aria-hidden="true"
+          style={{
+            position: 'absolute',
+            left: 0,
+            right: 0,
+            bottom: 0,
+            height: 5,
+            backgroundColor: '#FFDB00',
+            zIndex: 10,
+          }}
+        />
       </div>
     </div>
   );
