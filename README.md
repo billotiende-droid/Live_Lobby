@@ -2,9 +2,9 @@
 
 ChemShaa Live Lobby is a focused, mobile-first waiting-room interface for a live broadcast. It presents a clear live state, an animated visual emitter, and a single **Tune In** action in a compact, high-contrast layout.
 
-# Chemshaa Live Lobby Preview Mobile & Desktop View Screenshot: (https://github.com/billotiende-droid/Live_Lobby/issues/2)
+Chemshaa Live Lobby Preview Mobile & Desktop View Screenshot: (https://github.com/billotiende-droid/Live_Lobby/issues/2)
 
-# Live Demo Url : (https://live-lobby-chemshaa.vercel.app/)
+Live Demo Url : (https://live-lobby-chemshaa.vercel.app/)
 
 ## Contents
 
